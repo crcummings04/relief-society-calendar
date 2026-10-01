@@ -3,6 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#596b59">
   <title>Relief Society Teaching Calendar</title>
   <style>
     :root {
@@ -11,6 +12,7 @@
       --line: #d6cbb9;
       --soft: #f4efe5;
       --paper: #fffdf8;
+      --sage: #596b59;
       --avery: #a15d43;
       --morgan: #67806c;
       --allie: #c18b48;
@@ -19,234 +21,117 @@
     }
 
     * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      color: var(--ink);
-      background: linear-gradient(145deg, #f6f1e8 0%, #e8dfcf 100%);
-      font-family: Georgia, "Times New Roman", serif;
-    }
-
-    .page {
-      width: min(1180px, calc(100% - 32px));
-      margin: 0 auto;
-      padding: 38px 0 56px;
-    }
-
-    header {
-      display: flex;
-      align-items: flex-end;
-      justify-content: space-between;
-      gap: 24px;
-      margin-bottom: 28px;
-    }
-
-    h1 {
-      margin: 0 0 8px;
-      font-size: clamp(2rem, 5vw, 3.55rem);
-      line-height: 1;
-      letter-spacing: -.04em;
-      font-weight: 700;
-    }
-
-    .subtitle {
-      margin: 0;
-      color: var(--muted);
-      font: 500 1rem/1.5 system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    }
-
-    .actions { display: flex; gap: 10px; flex-wrap: wrap; }
-    button {
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      padding: 10px 16px;
-      background: var(--paper);
-      color: var(--ink);
-      cursor: pointer;
-      font: 700 .9rem system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      box-shadow: 0 4px 12px rgba(38, 50, 66, .06);
-    }
+    body { margin: 0; color: var(--ink); background: linear-gradient(145deg, #f6f1e8 0%, #e8dfcf 100%); font-family: Georgia, "Times New Roman", serif; }
+    .page { width: min(1240px, calc(100% - 32px)); margin: 0 auto; padding: 38px 0 56px; }
+    header { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; margin-bottom: 22px; }
+    h1 { margin: 0 0 8px; font-size: clamp(2rem, 5vw, 3.55rem); line-height: 1; letter-spacing: -.04em; font-weight: 700; }
+    .subtitle { margin: 0; color: var(--muted); font: 500 1rem/1.5 system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    .actions, .settings-actions, .history-actions { display: flex; gap: 9px; flex-wrap: wrap; align-items: center; }
+    button { border: 1px solid var(--line); border-radius: 999px; padding: 10px 15px; background: var(--paper); color: var(--ink); cursor: pointer; font: 700 .86rem system-ui, sans-serif; box-shadow: 0 4px 12px rgba(38, 50, 66, .06); }
     button:hover { transform: translateY(-1px); box-shadow: 0 7px 16px rgba(38, 50, 66, .10); }
-    button.primary { background: #596b59; color: white; border-color: #596b59; }
+    button.primary { background: var(--sage); color: white; border-color: var(--sage); }
+    button.small { padding: 7px 11px; font-size: .76rem; }
+    button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible, a:focus-visible { outline: 3px solid rgba(103,128,108,.35); outline-offset: 2px; }
 
-    .settings-panel {
-      margin: 0 0 22px;
-      padding: 20px;
-      border: 1px solid var(--line);
-      border-radius: 18px;
-      background: rgba(255,255,255,.88);
-      box-shadow: var(--shadow);
-    }
-    .settings-panel[hidden] { display: none; }
-    .settings-panel h2 { margin: 0 0 6px; font-size: 1.35rem; }
-    .settings-panel p { margin: 0 0 16px; color: var(--muted); font: .86rem/1.5 system-ui, sans-serif; }
+    .notice, .settings-panel, .history-panel, .legend, .month-card, .upcoming-card { border: 1px solid var(--line); border-radius: 18px; background: rgba(255,255,255,.86); box-shadow: var(--shadow); }
+    .notice { display: flex; justify-content: space-between; gap: 16px; align-items: center; margin: 0 0 18px; padding: 13px 16px; color: var(--muted); font: .8rem/1.45 system-ui, sans-serif; }
+    .notice strong { color: var(--ink); }
+    .notice.local { border-color: #e2b37a; background: #fff8eb; }
+    .notice.shared { border-color: #aac2a9; background: #f1f7f0; }
+    .settings-panel, .history-panel { margin: 0 0 22px; padding: 20px; }
+    [hidden] { display: none !important; }
+    .settings-panel h2, .history-panel h2 { margin: 0 0 6px; font-size: 1.35rem; }
+    .settings-panel p, .history-panel p { margin: 0 0 16px; color: var(--muted); font: .86rem/1.5 system-ui, sans-serif; }
     .settings-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
-    .settings-grid label, .rotation-field { display: grid; gap: 6px; color: var(--muted); font: 700 .74rem system-ui, sans-serif; }
-    .settings-grid input, .rotation-field textarea {
-      width: 100%; border: 1px solid var(--line); border-radius: 9px; padding: 9px 10px;
-      color: var(--ink); background: white; font: .92rem Georgia, serif;
-    }
+    .settings-grid label, .rotation-field, .field-label { display: grid; gap: 6px; color: var(--muted); font: 700 .74rem system-ui, sans-serif; }
+    .settings-grid input, .rotation-field textarea, .field-label input, .field-label textarea, .field-label select { width: 100%; border: 1px solid var(--line); border-radius: 9px; padding: 9px 10px; color: var(--ink); background: white; font: .92rem Georgia, serif; }
     .rotation-field { margin-top: 14px; }
     .rotation-field textarea { min-height: 88px; resize: vertical; line-height: 1.5; }
-    .settings-actions { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-top: 14px; }
-    .settings-status { color: var(--muted); font: .8rem system-ui, sans-serif; }
+    .settings-actions { margin-top: 14px; }
+    .settings-status, .sync-status { color: var(--muted); font: .8rem system-ui, sans-serif; }
+    .settings-help { margin: 14px 0 0; padding: 12px 14px; border-radius: 12px; background: var(--soft); color: var(--muted); font: .78rem/1.45 system-ui, sans-serif; }
 
-    .legend {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 9px 18px;
-      margin: 0 0 22px;
-      padding: 16px 20px;
-      border: 1px solid var(--line);
-      border-radius: 18px;
-      background: rgba(255,255,255,.72);
-      box-shadow: var(--shadow);
-      font: 700 .86rem system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    }
+    .upcoming { display: grid; grid-template-columns: 1.25fr 1fr 1fr 1fr; gap: 12px; margin: 0 0 22px; }
+    .upcoming-card { padding: 15px 16px; }
+    .upcoming-card.primary-card { background: #596b59; color: white; border-color: #596b59; }
+    .upcoming-card .eyebrow { margin-bottom: 7px; color: var(--muted); font: 800 .68rem system-ui, sans-serif; letter-spacing: .1em; text-transform: uppercase; }
+    .primary-card .eyebrow { color: rgba(255,255,255,.72); }
+    .upcoming-card h2 { margin: 0 0 4px; font-size: 1.12rem; }
+    .upcoming-card p { margin: 0; font: .82rem/1.4 system-ui, sans-serif; }
+    .upcoming-card .topic-preview { margin-top: 7px; color: var(--muted); font-size: .78rem; }
+    .primary-card .topic-preview { color: rgba(255,255,255,.78); }
+
+    .legend { display: flex; flex-wrap: wrap; gap: 9px 18px; margin: 0 0 22px; padding: 16px 20px; font: 700 .86rem system-ui, sans-serif; }
     .legend span { display: inline-flex; align-items: center; gap: 8px; }
     .dot { width: 11px; height: 11px; border-radius: 50%; display: inline-block; }
-    .dot.avery { background: var(--avery); }
-    .dot.morgan { background: var(--morgan); }
-    .dot.allie { background: var(--allie); }
-    .dot.presidency { background: var(--presidency); }
-
     .months { display: grid; gap: 24px; }
-    .month-card {
-      overflow: hidden;
-      border: 1px solid var(--line);
-      border-radius: 22px;
-      background: var(--paper);
-      box-shadow: var(--shadow);
-    }
-    .month-heading {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 20px 24px 16px;
-      border-bottom: 1px solid var(--line);
-      background: linear-gradient(110deg, #fff, #f6f8fb);
-    }
+    .month-card { overflow: hidden; background: var(--paper); }
+    .month-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 20px 24px 16px; border-bottom: 1px solid var(--line); background: linear-gradient(110deg, #fff, #f6f8fb); }
     .month-heading h2 { margin: 0; font-size: 1.65rem; letter-spacing: -.02em; }
-    .month-heading p { margin: 0; color: var(--muted); font: .86rem system-ui, sans-serif; }
-
-    .calendar-grid {
-      display: grid;
-      grid-template-columns: repeat(7, minmax(0, 1fr));
-    }
-    .weekday {
-      padding: 11px 8px;
-      background: var(--soft);
-      color: var(--muted);
-      border-bottom: 1px solid var(--line);
-      text-align: center;
-      text-transform: uppercase;
-      letter-spacing: .08em;
-      font: 700 .7rem system-ui, sans-serif;
-    }
-    .day {
-      min-height: 128px;
-      padding: 12px;
-      border-right: 1px solid var(--line);
-      border-bottom: 1px solid var(--line);
-      background: white;
-    }
+    .month-heading p { margin: 0; color: var(--muted); font: .82rem system-ui, sans-serif; }
+    .calendar-grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); }
+    .weekday { padding: 11px 8px; background: var(--soft); color: var(--muted); border-bottom: 1px solid var(--line); text-align: center; text-transform: uppercase; letter-spacing: .08em; font: 700 .7rem system-ui, sans-serif; }
+    .day { min-height: 188px; padding: 12px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); background: white; }
     .day:nth-child(7n) { border-right: 0; }
-    .day.empty { background: #fbfcfe; }
-    .date-number {
-      display: block;
-      margin-bottom: 8px;
-      color: var(--ink);
-      font: 700 1.08rem system-ui, sans-serif;
-    }
-    .teaching-day {
-      position: relative;
-      background: #f7f9fc;
-    }
-    .teaching-day::before {
-      position: absolute;
-      inset: 0 auto 0 0;
-      width: 5px;
-      content: "";
-      background: var(--teacher-color);
-    }
-    .teacher {
-      margin-bottom: 8px;
-      color: var(--teacher-color);
-      font: 800 .78rem/1.2 system-ui, sans-serif;
-      text-transform: uppercase;
-      letter-spacing: .04em;
-    }
-    .teacher-select {
-      width: 100%;
-      margin-bottom: 8px;
-      border: 1px solid #d8cdbb;
-      border-radius: 9px;
-      padding: 7px 8px;
-      color: var(--teacher-color);
-      background: #fffdf8;
-      font: 800 .75rem/1.2 system-ui, sans-serif;
-    }
-    .teacher-select:focus { outline: 2px solid rgba(103,128,108,.35); border-color: var(--morgan); }
-    .topic-label {
-      display: block;
-      margin-bottom: 4px;
-      color: var(--muted);
-      font: 700 .66rem system-ui, sans-serif;
-      letter-spacing: .07em;
-      text-transform: uppercase;
-    }
-    .topic {
-      width: 100%;
-      min-height: 48px;
-      resize: vertical;
-      border: 1px solid #d8dee7;
-      border-radius: 9px;
-      padding: 8px;
-      color: var(--ink);
-      background: white;
-      font: .86rem/1.3 Georgia, "Times New Roman", serif;
-    }
-    .topic:focus { outline: 2px solid rgba(42,127,142,.35); border-color: var(--morgan); }
-    .calendar-link {
-      display: inline-block;
-      margin-top: 7px;
-      color: var(--morgan);
-      font: 700 .68rem system-ui, sans-serif;
-      text-decoration: none;
-    }
+    .day.empty { min-height: 80px; background: #fbfcfe; }
+    .date-number { display: block; margin-bottom: 8px; color: var(--ink); font: 700 1.08rem system-ui, sans-serif; }
+    .teaching-day { position: relative; background: #f7f9fc; }
+    .teaching-day::before { position: absolute; inset: 0 auto 0 0; width: 5px; content: ""; background: var(--teacher-color); }
+    .teaching-day.cancelled, .teaching-day.skipped { --teacher-color: #9a9387 !important; background: #f1eee8; }
+    .teacher-select, .status-select { width: 100%; margin-bottom: 7px; border: 1px solid #d8cdbb; border-radius: 9px; padding: 7px 8px; color: var(--teacher-color); background: #fffdf8; font: 800 .73rem/1.2 system-ui, sans-serif; }
+    .status-select { color: var(--muted); font-weight: 700; }
+    .topic-label { display: block; margin-bottom: 4px; color: var(--muted); font: 700 .64rem system-ui, sans-serif; letter-spacing: .07em; text-transform: uppercase; }
+    .topic, .prep-notes, .resource-url { width: 100%; border: 1px solid #d8dee7; border-radius: 9px; padding: 8px; color: var(--ink); background: white; font: .82rem/1.3 Georgia, serif; }
+    .topic { min-height: 44px; resize: vertical; }
+    .prep-notes { min-height: 68px; resize: vertical; }
+    .resource-url { font-size: .76rem; }
+    .ready-check { display: flex; align-items: center; gap: 6px; margin-top: 8px; color: var(--muted); font: 700 .68rem system-ui, sans-serif; }
+    .ready-check input { accent-color: var(--sage); }
+    .day-details { margin-top: 8px; }
+    .day-details summary { color: var(--sage); cursor: pointer; font: 700 .68rem system-ui, sans-serif; }
+    .detail-fields { display: grid; gap: 7px; margin-top: 7px; }
+    .calendar-link { display: inline-block; margin-top: 8px; color: var(--morgan); font: 700 .66rem system-ui, sans-serif; text-decoration: none; }
     .calendar-link:hover { text-decoration: underline; }
-    .save-note {
-      margin: 18px 0 0;
-      color: var(--muted);
-      text-align: center;
-      font: .8rem system-ui, sans-serif;
-    }
+    .status-badge { display: inline-block; margin: 0 0 6px; padding: 3px 7px; border-radius: 999px; background: #e9e1d3; color: var(--muted); font: 800 .61rem system-ui, sans-serif; text-transform: uppercase; letter-spacing: .05em; }
+    .save-note { margin: 18px 0 0; color: var(--muted); text-align: center; font: .8rem system-ui, sans-serif; }
+    .history-list { display: grid; gap: 7px; margin: 0; padding: 0; list-style: none; max-height: 260px; overflow: auto; }
+    .history-list li { display: flex; justify-content: space-between; gap: 10px; padding: 9px 11px; border-radius: 10px; background: var(--soft); color: var(--muted); font: .75rem/1.4 system-ui, sans-serif; }
+    .history-list time { white-space: nowrap; color: #958c7c; }
 
+    @media (max-width: 900px) { .upcoming { grid-template-columns: repeat(2, minmax(0, 1fr)); } .settings-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
     @media (max-width: 720px) {
-      .page { width: min(100% - 18px, 1180px); padding-top: 22px; }
+      .page { width: min(100% - 18px, 1240px); padding-top: 22px; }
       header { align-items: flex-start; flex-direction: column; }
+      .actions { width: 100%; }
+      button { flex: 1 1 auto; }
+      .notice { align-items: flex-start; flex-direction: column; }
+      .upcoming { grid-template-columns: 1fr; }
+      .upcoming-card:not(.primary-card) { display: none; }
       .month-heading { padding: 16px; }
       .month-heading p { display: none; }
       .settings-grid { grid-template-columns: 1fr; }
-      .day { min-height: 112px; padding: 8px; }
+      .day { min-height: 164px; padding: 8px; }
+      .day.empty { min-height: 54px; }
       .weekday { padding: 9px 2px; font-size: .58rem; }
-      .teacher { font-size: .66rem; }
-      .topic { font-size: .78rem; padding: 6px; }
+      .date-number { font-size: .95rem; }
+      .teacher-select, .status-select { font-size: .64rem; padding: 6px 4px; }
+      .topic, .prep-notes, .resource-url { font-size: .72rem; padding: 6px; }
     }
-
     @media print {
       @page { size: letter portrait; margin: .35in; }
       body { background: white; }
       .page { width: 100%; padding: 0; }
       header { margin-bottom: 14px; }
-      .actions { display: none; }
+      .actions, .notice, .settings-panel, .history-panel, .upcoming, .calendar-link, .day-details summary, .save-note { display: none !important; }
       .legend, .month-card { box-shadow: none; }
       .legend { margin-bottom: 12px; }
       .months { gap: 18px; }
       .month-card { break-inside: avoid; }
       .month-card:not(:first-child) { break-before: page; }
       .day { min-height: 105px; }
+      .day-details { display: block; }
+      .detail-fields { display: none; }
       .topic { border-color: #9da8b6; }
-      .calendar-link { display: none; }
     }
   </style>
 </head>
@@ -255,19 +140,29 @@
     <header>
       <div>
         <h1>Relief Society Teaching Calendar</h1>
-        <p class="subtitle">October - December 2026 &nbsp; | &nbsp; Sunday teaching rotation</p>
+        <p class="subtitle" id="subtitle">Sunday teaching rotation</p>
       </div>
       <div class="actions">
-        <button class="primary" type="button" id="printButton">Print calendar</button>
-        <button type="button" id="exportButton">Export to Google Calendar</button>
+        <button class="primary" type="button" id="printButton">Print / save PDF</button>
+        <button type="button" id="copyLinkButton">Copy share link</button>
+        <button type="button" id="shareButton">Share</button>
+        <button type="button" id="exportButton">Download .ics</button>
         <button type="button" id="settingsButton">Settings</button>
-        <button type="button" id="clearButton">Clear topics</button>
+        <button type="button" id="historyButton">History</button>
+        <button type="button" id="clearButton">Reset details</button>
       </div>
     </header>
 
+    <section class="notice local" id="syncNotice" role="status">
+      <span><strong id="syncTitle">Private browser mode</strong> · Changes are saved on this device.</span>
+      <button class="small" type="button" id="syncButton">Sync shared data</button>
+    </section>
+
+    <section class="upcoming" id="upcoming" aria-label="Upcoming teaching assignments"></section>
+
     <section class="settings-panel" id="settingsPanel" hidden>
       <h2>Adapt your calendar</h2>
-      <p>Change the starting Sunday, rotation, calendar title, or optional meeting time. You can also change an individual Sunday’s teacher directly in its calendar cell.</p>
+      <p>Change the rotation, meeting details, reminders, and optional shared connection. Individual Sundays can be changed directly in the calendar.</p>
       <div class="settings-grid">
         <label>Starting Sunday
           <input type="date" id="startDateInput">
@@ -281,336 +176,222 @@
         <label>Event length (minutes)
           <input type="number" id="durationInput" min="15" step="15" value="60">
         </label>
+        <label>Meeting location
+          <input type="text" id="locationInput" placeholder="Optional">
+        </label>
+        <label>Calendar reminder (days before)
+          <input type="number" id="reminderDaysInput" min="0" max="30" step="1" value="0">
+        </label>
+        <label>Shared sync URL (optional)
+          <input type="url" id="endpointInput" placeholder="Google Apps Script web app URL">
+        </label>
+        <label>Notification email (optional)
+          <input type="email" id="emailInput" placeholder="you@example.com">
+        </label>
       </div>
       <label class="rotation-field">Teaching rotation (one person or group per line)
         <textarea id="rotationInput" spellcheck="false"></textarea>
       </label>
       <div class="settings-actions">
         <button class="primary" type="button" id="saveSettingsButton">Save settings</button>
+        <button type="button" id="loadSharedButton">Load shared calendar</button>
         <span class="settings-status" id="settingsStatus"></span>
       </div>
+      <div class="settings-help">For true shared editing and email notifications, connect this page to a small shared endpoint such as Google Apps Script. The page is ready to send the calendar data and the notification email address whenever a change is saved.</div>
+    </section>
+
+    <section class="history-panel" id="historyPanel" hidden>
+      <h2>Recent changes</h2>
+      <p>Changes are recorded in this browser. With shared sync enabled, the same change payload can also be stored centrally.</p>
+      <div class="history-actions"><button class="small" type="button" id="undoButton">Undo last change</button><button class="small" type="button" id="clearHistoryButton">Clear history</button></div>
+      <ul class="history-list" id="historyList"></ul>
     </section>
 
     <div class="legend" id="legend" aria-label="Teacher rotation"></div>
-
     <section class="months" id="months" aria-label="Teaching calendar months"></section>
-    <p class="save-note">Lesson topics save automatically in this browser.</p>
+    <p class="save-note">Lesson topics and preparation details save automatically in this browser. Use “Copy share link” for a snapshot link, or add a shared sync URL for live shared edits.</p>
   </main>
 
   <script>
-    const settingsKey = 'relief-society-calendar-settings';
-    const topicsKey = 'relief-society-calendar-topics';
-    const overridesKey = 'relief-society-calendar-teacher-overrides';
+    const keys = {
+      settings: 'relief-society-calendar-settings',
+      topics: 'relief-society-calendar-topics',
+      overrides: 'relief-society-calendar-teacher-overrides',
+      details: 'relief-society-calendar-details',
+      history: 'relief-society-calendar-history',
+      sync: 'relief-society-calendar-sync'
+    };
     const defaults = {
       startDate: '2026-10-11',
       title: 'Relief Society Teaching',
       time: '',
       duration: 60,
+      location: '',
+      reminderDays: 0,
       rotation: ['Avery', 'Morgan', 'Allie', 'Relief Society Presidency']
     };
-    let settings = loadSettings();
-    let savedTopics = loadJson(topicsKey, {});
-    let savedOverrides = loadJson(overridesKey, {});
     const weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    const statuses = [
+      { value: 'scheduled', label: 'Scheduled' },
+      { value: 'confirmed', label: 'Confirmed' },
+      { value: 'combined', label: 'Combined meeting' },
+      { value: 'cancelled', label: 'Cancelled' },
+      { value: 'skipped', label: 'Skip this Sunday' }
+    ];
     const palette = ['#a15d43', '#67806c', '#c18b48', '#72543f', '#8a6a52', '#7c8a62', '#a77b4f'];
+    let settings = loadSettings();
+    let savedTopics = loadJson(keys.topics, {});
+    let savedOverrides = loadJson(keys.overrides, {});
+    let eventDetails = loadJson(keys.details, {});
+    let history = loadJson(keys.history, []);
+    let sync = loadJson(keys.sync, { endpoint: '', email: '' });
 
+    function clone(value) { return JSON.parse(JSON.stringify(value)); }
     function loadJson(key, fallback) {
-      try { return JSON.parse(localStorage.getItem(key) || JSON.stringify(fallback)); }
-      catch (error) { return fallback; }
+      try { return JSON.parse(localStorage.getItem(key) || JSON.stringify(fallback)); } catch (error) { return clone(fallback); }
     }
-
     function loadSettings() {
-      const saved = loadJson(settingsKey, {});
-      return {
-        ...defaults,
-        ...saved,
-        rotation: Array.isArray(saved.rotation) && saved.rotation.length ? saved.rotation : defaults.rotation
-      };
+      const saved = loadJson(keys.settings, {});
+      return { ...defaults, ...saved, rotation: Array.isArray(saved.rotation) && saved.rotation.length ? saved.rotation : defaults.rotation };
     }
-
-    function parseDate(value) {
-      const [year, month, day] = value.split('-').map(Number);
-      return new Date(year, month - 1, day);
-    }
-
-    function dateKey(date) {
-      return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
-    }
-
-    function addDays(date, days) {
-      const result = new Date(date.getFullYear(), date.getMonth(), date.getDate());
-      result.setDate(result.getDate() + days);
-      return result;
-    }
-
+    function parseDate(value) { const [year, month, day] = value.split('-').map(Number); return new Date(year, month - 1, day); }
+    function dateKey(date) { return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`; }
+    function addDays(date, days) { const result = new Date(date.getFullYear(), date.getMonth(), date.getDate()); result.setDate(result.getDate() + days); return result; }
+    function dateLabel(date, options = { month: 'short', day: 'numeric', year: 'numeric' }) { return date.toLocaleDateString(undefined, options); }
     function teacherColor(teacher, index) {
-      const known = {
-        'Avery': '#a15d43',
-        'Morgan': '#67806c',
-        'Allie': '#c18b48',
-        'Relief Society Presidency': '#72543f'
-      };
+      const known = { Avery: '#a15d43', Morgan: '#67806c', Allie: '#c18b48', 'Relief Society Presidency': '#72543f' };
       return known[teacher] || palette[Math.max(0, index) % palette.length];
     }
-
+    function getDetails(date) { return eventDetails[dateKey(date)] || { status: 'scheduled', notes: '', resource: '', ready: false }; }
     function scheduledTeacherFor(date) {
-      const start = parseDate(settings.startDate);
-      const day = new Date(date.getFullYear(), date.getMonth(), date.getDate());
-      const weeks = Math.floor((day - start) / (7 * 24 * 60 * 60 * 1000));
+      const start = parseDate(settings.startDate); const day = new Date(date.getFullYear(), date.getMonth(), date.getDate()); const weeks = Math.floor((day - start) / (7 * 24 * 60 * 60 * 1000));
       if (day < start || day.getDay() !== 0 || weeks < 0 || !settings.rotation.length) return '';
       return settings.rotation[weeks % settings.rotation.length];
     }
-
-    function teacherFor(date) {
-      return savedOverrides[dateKey(date)] || scheduledTeacherFor(date);
-    }
-
-    function isTeachingSunday(date) {
-      const start = parseDate(settings.startDate);
-      return date.getDay() === 0 && date >= start;
-    }
-
+    function teacherFor(date) { return savedOverrides[dateKey(date)] || scheduledTeacherFor(date); }
+    function isTeachingSunday(date) { return date.getDay() === 0 && date >= parseDate(settings.startDate); }
     function visibleMonths() {
       const start = parseDate(settings.startDate);
-      return [0, 1, 2].map(offset => {
-        const month = new Date(start.getFullYear(), start.getMonth() + offset, 1);
-        return { year: month.getFullYear(), month: month.getMonth(), name: month.toLocaleString(undefined, { month: 'long', year: 'numeric' }) };
-      });
+      return [0, 1, 2].map(offset => { const month = new Date(start.getFullYear(), start.getMonth() + offset, 1); return { year: month.getFullYear(), month: month.getMonth(), name: month.toLocaleString(undefined, { month: 'long', year: 'numeric' }) }; });
     }
+    function googleDate(date) { return `${date.getFullYear()}${String(date.getMonth() + 1).padStart(2, '0')}${String(date.getDate()).padStart(2, '0')}`; }
+    function googleDateTime(date, time) { return `${googleDate(date)}T${time.replace(':', '')}00`; }
+    function statusFor(date) { return getDetails(date).status || 'scheduled'; }
+    function isInactive(date) { return ['cancelled', 'skipped'].includes(statusFor(date)); }
 
-    function googleDate(date) {
-      return `${date.getFullYear()}${String(date.getMonth() + 1).padStart(2, '0')}${String(date.getDate()).padStart(2, '0')}`;
-    }
-
-    function googleDateTime(date, time) {
-      return `${googleDate(date)}T${time.replace(':', '')}00`;
-    }
-
+    function statusLabel(value) { return statuses.find(item => item.value === value)?.label || 'Scheduled'; }
     function calendarEventUrl(date, teacher) {
-      const topic = savedTopics[dateKey(date)] || 'Lesson topic TBD';
+      const details = getDetails(date); const topic = savedTopics[dateKey(date)] || 'Lesson topic TBD';
+      const description = [`Teacher: ${teacher}`, `Status: ${statusLabel(details.status)}`, `Lesson topic: ${topic}`, details.notes ? `Preparation notes: ${details.notes}` : '', details.resource ? `Resource: ${details.resource}` : ''].filter(Boolean).join('\n');
       let dates;
-      if (settings.time) {
-        const startMinutes = Number(settings.time.slice(0, 2)) * 60 + Number(settings.time.slice(3, 5));
-        const endMinutes = startMinutes + Number(settings.duration || 60);
-        const end = `${String(Math.floor(endMinutes / 60) % 24).padStart(2, '0')}:${String(endMinutes % 60).padStart(2, '0')}`;
-        dates = `${googleDateTime(date, settings.time)}/${googleDateTime(date, end)}`;
-      } else {
-        dates = `${googleDate(date)}/${googleDate(addDays(date, 1))}`;
-      }
-      const params = new URLSearchParams({
-        action: 'TEMPLATE',
-        text: `${settings.title} - ${teacher}`,
-        dates,
-        details: `Teacher: ${teacher}\nLesson topic: ${topic}`
-      });
+      if (settings.time) { const startMinutes = Number(settings.time.slice(0, 2)) * 60 + Number(settings.time.slice(3, 5)); const endMinutes = startMinutes + Number(settings.duration || 60); const end = `${String(Math.floor(endMinutes / 60) % 24).padStart(2, '0')}:${String(endMinutes % 60).padStart(2, '0')}`; dates = `${googleDateTime(date, settings.time)}/${googleDateTime(date, end)}`; }
+      else dates = `${googleDate(date)}/${googleDate(addDays(date, 1))}`;
+      const params = new URLSearchParams({ action: 'TEMPLATE', text: `${settings.title} - ${teacher}`, dates, details: description }); if (settings.location) params.set('location', settings.location);
       return `https://calendar.google.com/calendar/render?${params.toString()}`;
+    }
+    function captureSnapshot() { return { settings: clone(settings), savedTopics: clone(savedTopics), savedOverrides: clone(savedOverrides), eventDetails: clone(eventDetails) }; }
+    function applySnapshot(snapshot) {
+      if (!snapshot) return;
+      settings = { ...defaults, ...(snapshot.settings || {}), rotation: snapshot.settings?.rotation?.length ? snapshot.settings.rotation : defaults.rotation };
+      savedTopics = snapshot.savedTopics || {}; savedOverrides = snapshot.savedOverrides || {}; eventDetails = snapshot.eventDetails || {};
+    }
+    function persist() {
+      localStorage.setItem(keys.settings, JSON.stringify(settings)); localStorage.setItem(keys.topics, JSON.stringify(savedTopics)); localStorage.setItem(keys.overrides, JSON.stringify(savedOverrides)); localStorage.setItem(keys.details, JSON.stringify(eventDetails)); localStorage.setItem(keys.history, JSON.stringify(history)); localStorage.setItem(keys.sync, JSON.stringify(sync));
+    }
+    function recordChange(summary, previous) {
+      history.unshift({ summary, previous, timestamp: new Date().toISOString() }); history = history.slice(0, 40); persist(); renderHistory(); void syncState();
+    }
+    function updateField(date, field, value, summary) {
+      const previous = captureSnapshot(); const key = dateKey(date); const details = { ...getDetails(date) };
+      if (field === 'topic') { if (value) savedTopics[key] = value; else delete savedTopics[key]; }
+      else if (field === 'teacher') { const scheduled = scheduledTeacherFor(date); if (value === scheduled) delete savedOverrides[key]; else savedOverrides[key] = value; }
+      else { details[field] = value; eventDetails[key] = details; }
+      persist(); render(); recordChange(summary, previous);
     }
 
     function renderLegend() {
-      const legend = document.getElementById('legend');
-      legend.innerHTML = '';
-      settings.rotation.forEach((teacher, index) => {
-        const item = document.createElement('span');
-        item.innerHTML = `<i class="dot" style="background:${teacherColor(teacher, index)}"></i>${teacher}`;
-        legend.appendChild(item);
-      });
+      const legend = document.getElementById('legend'); legend.innerHTML = '';
+      settings.rotation.forEach((teacher, index) => { const item = document.createElement('span'); const dot = document.createElement('i'); dot.className = 'dot'; dot.style.background = teacherColor(teacher, index); item.append(dot, document.createTextNode(teacher)); legend.appendChild(item); });
     }
-
+    function createOption(select, value, label) { const option = document.createElement('option'); option.value = value; option.textContent = label; select.appendChild(option); }
+    function buildTeacherSelect(date, teacher) {
+      const select = document.createElement('select'); select.className = 'teacher-select'; select.setAttribute('aria-label', `Teacher for ${dateLabel(date)}`);
+      settings.rotation.forEach(name => createOption(select, name, name)); if (teacher && !settings.rotation.includes(teacher)) createOption(select, teacher, teacher); createOption(select, '__custom__', 'Custom teacher…'); select.value = teacher;
+      select.addEventListener('change', () => { let next = select.value; if (next === '__custom__') { next = prompt('Enter the teacher or group for this Sunday:', teacher || ''); if (!next?.trim()) { render(); return; } next = next.trim(); } updateField(date, 'teacher', next, `${dateLabel(date)} teacher changed to ${next}`); });
+      return select;
+    }
+    function buildStatusSelect(date) {
+      const select = document.createElement('select'); select.className = 'status-select'; select.setAttribute('aria-label', `Status for ${dateLabel(date)}`); statuses.forEach(item => createOption(select, item.value, item.label)); select.value = statusFor(date); select.addEventListener('change', () => updateField(date, 'status', select.value, `${dateLabel(date)} marked ${statusLabel(select.value)}`)); return select;
+    }
     function buildMonth({ year, month, name }) {
-      const card = document.createElement('article');
-      card.className = 'month-card';
-      card.innerHTML = `<div class="month-heading"><h2>${name}</h2><p>Click a topic field to add a lesson</p></div>`;
-
-      const grid = document.createElement('div');
-      grid.className = 'calendar-grid';
-      weekdays.forEach(dayName => {
-        const heading = document.createElement('div');
-        heading.className = 'weekday';
-        heading.textContent = dayName;
-        grid.appendChild(heading);
-      });
-
-      const first = new Date(year, month, 1);
-      const offset = first.getDay();
-      const last = new Date(year, month + 1, 0).getDate();
-      for (let i = 0; i < offset; i++) {
-        const empty = document.createElement('div');
-        empty.className = 'day empty';
-        grid.appendChild(empty);
-      }
-
+      const card = document.createElement('article'); card.className = 'month-card'; card.innerHTML = `<div class="month-heading"><h2>${name}</h2><p>Tap a Sunday to edit teacher, topic, and preparation details</p></div>`;
+      const grid = document.createElement('div'); grid.className = 'calendar-grid'; weekdays.forEach(dayName => { const heading = document.createElement('div'); heading.className = 'weekday'; heading.textContent = dayName; grid.appendChild(heading); });
+      const first = new Date(year, month, 1); const offset = first.getDay(); const last = new Date(year, month + 1, 0).getDate(); for (let i = 0; i < offset; i++) { const empty = document.createElement('div'); empty.className = 'day empty'; grid.appendChild(empty); }
       for (let dayNumber = 1; dayNumber <= last; dayNumber++) {
-        const date = new Date(year, month, dayNumber);
-        const day = document.createElement('div');
-        day.className = 'day';
-        const number = document.createElement('span');
-        number.className = 'date-number';
-        number.textContent = dayNumber;
-        day.appendChild(number);
-
-        const teacher = teacherFor(date);
-        const scheduledTeacher = scheduledTeacherFor(date);
+        const date = new Date(year, month, dayNumber); const day = document.createElement('div'); day.className = 'day'; const number = document.createElement('span'); number.className = 'date-number'; number.textContent = dayNumber; day.appendChild(number);
         if (isTeachingSunday(date)) {
-          day.classList.add('teaching-day');
-          const rotationIndex = settings.rotation.indexOf(teacher);
-          day.style.setProperty('--teacher-color', teacherColor(teacher, rotationIndex));
-
-          const teacherSelect = document.createElement('select');
-          teacherSelect.className = 'teacher-select';
-          teacherSelect.setAttribute('aria-label', `Teacher for ${date.toLocaleDateString()}`);
-          settings.rotation.forEach(optionName => {
-            const option = document.createElement('option');
-            option.value = optionName;
-            option.textContent = optionName;
-            teacherSelect.appendChild(option);
-          });
-          if (teacher && !settings.rotation.includes(teacher)) {
-            const customOption = document.createElement('option');
-            customOption.value = teacher;
-            customOption.textContent = teacher;
-            teacherSelect.appendChild(customOption);
-          }
-          teacherSelect.value = teacher;
-          teacherSelect.addEventListener('change', () => {
-            const key = dateKey(date);
-            if (teacherSelect.value === scheduledTeacher) delete savedOverrides[key];
-            else savedOverrides[key] = teacherSelect.value;
-            localStorage.setItem(overridesKey, JSON.stringify(savedOverrides));
-            render();
-          });
-          day.appendChild(teacherSelect);
-
-          const label = document.createElement('label');
-          label.className = 'topic-label';
-          label.textContent = 'Lesson topic';
-          label.setAttribute('for', `topic-${dateKey(date)}`);
-          day.appendChild(label);
-
-          const topic = document.createElement('textarea');
-          topic.className = 'topic';
-          topic.id = `topic-${dateKey(date)}`;
-          topic.placeholder = 'Add topic...';
-          topic.value = savedTopics[dateKey(date)] || '';
-          day.appendChild(topic);
-
-          const link = document.createElement('a');
-          link.className = 'calendar-link';
-          link.target = '_blank';
-          link.rel = 'noopener';
-          link.textContent = 'Add to Google Calendar';
-          link.href = calendarEventUrl(date, teacher);
-          topic.addEventListener('input', () => {
-            savedTopics[dateKey(date)] = topic.value;
-            localStorage.setItem(topicsKey, JSON.stringify(savedTopics));
-            link.href = calendarEventUrl(date, teacherFor(date));
-          });
-          day.appendChild(link);
+          const teacher = teacherFor(date); const detail = getDetails(date); const rotationIndex = settings.rotation.indexOf(teacher); day.classList.add('teaching-day'); if (detail.status === 'cancelled') day.classList.add('cancelled'); if (detail.status === 'skipped') day.classList.add('skipped'); day.style.setProperty('--teacher-color', teacherColor(teacher, rotationIndex)); day.appendChild(buildStatusSelect(date));
+          const badge = document.createElement('span'); badge.className = 'status-badge'; badge.textContent = detail.status === 'scheduled' ? (detail.ready ? 'Ready' : 'Open') : statusLabel(detail.status); day.appendChild(badge); day.appendChild(buildTeacherSelect(date, teacher));
+          const label = document.createElement('label'); label.className = 'topic-label'; label.textContent = 'Lesson topic'; label.htmlFor = `topic-${dateKey(date)}`; day.appendChild(label);
+          const topic = document.createElement('textarea'); topic.className = 'topic'; topic.id = `topic-${dateKey(date)}`; topic.placeholder = 'Add topic…'; topic.value = savedTopics[dateKey(date)] || ''; topic.addEventListener('change', () => updateField(date, 'topic', topic.value.trim(), `${dateLabel(date)} lesson topic updated`)); day.appendChild(topic);
+          const details = document.createElement('details'); details.className = 'day-details'; const summary = document.createElement('summary'); summary.textContent = 'Preparation details'; details.appendChild(summary); const fields = document.createElement('div'); fields.className = 'detail-fields';
+          const notesLabel = document.createElement('label'); notesLabel.className = 'field-label'; notesLabel.textContent = 'Teacher notes'; const notes = document.createElement('textarea'); notes.className = 'prep-notes'; notes.placeholder = 'Scriptures, discussion ideas, reminders…'; notes.value = detail.notes || ''; notes.addEventListener('change', () => updateField(date, 'notes', notes.value.trim(), `${dateLabel(date)} preparation notes updated`)); notesLabel.appendChild(notes); fields.appendChild(notesLabel);
+          const resourceLabel = document.createElement('label'); resourceLabel.className = 'field-label'; resourceLabel.textContent = 'Manual or resource link'; const resource = document.createElement('input'); resource.type = 'url'; resource.className = 'resource-url'; resource.placeholder = 'https://…'; resource.value = detail.resource || ''; resource.addEventListener('change', () => updateField(date, 'resource', resource.value.trim(), `${dateLabel(date)} resource link updated`)); resourceLabel.appendChild(resource); fields.appendChild(resourceLabel);
+          const readyLabel = document.createElement('label'); readyLabel.className = 'ready-check'; const ready = document.createElement('input'); ready.type = 'checkbox'; ready.checked = Boolean(detail.ready); ready.addEventListener('change', () => updateField(date, 'ready', ready.checked, `${dateLabel(date)} marked ${ready.checked ? 'ready' : 'not ready'}`)); readyLabel.append(ready, document.createTextNode(' Ready for Sunday')); fields.appendChild(readyLabel);
+          details.appendChild(fields); day.appendChild(details); if (teacher && !isInactive(date)) { const link = document.createElement('a'); link.className = 'calendar-link'; link.target = '_blank'; link.rel = 'noopener'; link.textContent = 'Add to Google Calendar'; link.href = calendarEventUrl(date, teacher); day.appendChild(link); }
         }
         grid.appendChild(day);
       }
-
-      while (grid.children.length % 7 !== 0) {
-        const empty = document.createElement('div');
-        empty.className = 'day empty';
-        grid.appendChild(empty);
-      }
-      card.appendChild(grid);
-      return card;
+      while (grid.children.length % 7 !== 0) { const empty = document.createElement('div'); empty.className = 'day empty'; grid.appendChild(empty); } card.appendChild(grid); return card;
     }
-
-    function render() {
-      renderLegend();
-      const months = document.getElementById('months');
-      months.innerHTML = '';
-      visibleMonths().forEach(month => months.appendChild(buildMonth(month)));
+    function renderUpcoming() {
+      const root = document.getElementById('upcoming'); root.innerHTML = ''; const today = new Date(); today.setHours(0, 0, 0, 0); const start = parseDate(settings.startDate); let cursor = today > start ? today : start; cursor = addDays(cursor, (7 - cursor.getDay()) % 7); const upcoming = [];
+      for (let i = 0; i < 18 && upcoming.length < 3; i++) { const date = addDays(cursor, i * 7); if (isTeachingSunday(date)) upcoming.push(date); }
+      if (!upcoming.length) { root.innerHTML = '<div class="upcoming-card primary-card"><div class="eyebrow">Next up</div><h2>No upcoming Sundays</h2><p>Adjust the starting date in Settings.</p></div>'; return; }
+      upcoming.forEach((date, index) => { const teacher = teacherFor(date); const detail = getDetails(date); const card = document.createElement('article'); card.className = `upcoming-card${index === 0 ? ' primary-card' : ''}`; card.innerHTML = `<div class="eyebrow">${index === 0 ? 'Next up' : `Coming up · ${index + 1}`}</div><h2>${dateLabel(date, { weekday: 'short', month: 'short', day: 'numeric' })}</h2><p>${isInactive(date) ? statusLabel(detail.status) : teacher}</p><p class="topic-preview">${savedTopics[dateKey(date)] || 'Lesson topic TBD'}</p>`; root.appendChild(card); });
     }
-
-    function escapeICS(value) {
-      return String(value).replace(/\\/g, '\\\\').replace(/;/g, '\\;').replace(/,/g, '\\,').replace(/\n/g, '\\n');
+    function renderHistory() {
+      const list = document.getElementById('historyList'); list.innerHTML = ''; if (!history.length) { list.innerHTML = '<li>No changes recorded yet.</li>'; return; }
+      history.slice(0, 20).forEach(item => { const li = document.createElement('li'); const text = document.createElement('span'); text.textContent = item.summary; const time = document.createElement('time'); time.textContent = new Date(item.timestamp).toLocaleString(undefined, { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' }); li.append(text, time); list.appendChild(li); });
     }
+    function updateSyncNotice(message) { const notice = document.getElementById('syncNotice'); const title = document.getElementById('syncTitle'); if (sync.endpoint) { notice.className = 'notice shared'; title.textContent = message || 'Shared sync enabled'; } else { notice.className = 'notice local'; title.textContent = 'Private browser mode'; } }
+    function render() { const months = visibleMonths(); document.getElementById('subtitle').textContent = `${parseDate(settings.startDate).toLocaleString(undefined, { month: 'long' })} – ${months[2].name}  |  Sunday teaching rotation`; renderLegend(); renderUpcoming(); renderHistory(); const root = document.getElementById('months'); root.innerHTML = ''; months.forEach(month => root.appendChild(buildMonth(month))); updateSyncNotice(); }
 
+    function escapeICS(value) { return String(value).replace(/\\/g, '\\\\').replace(/;/g, '\\;').replace(/,/g, '\\,').replace(/\n/g, '\\n'); }
     function downloadICS() {
-      const monthList = visibleMonths();
-      const first = new Date(monthList[0].year, monthList[0].month, 1);
-      const last = new Date(monthList[2].year, monthList[2].month + 1, 0);
-      const lines = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Relief Society Teaching Calendar//EN', 'CALSCALE:GREGORIAN'];
-      for (let date = first; date <= last; date = addDays(date, 1)) {
-        const teacher = teacherFor(date);
-        if (!teacher) continue;
-        const topic = savedTopics[dateKey(date)] || 'Lesson topic TBD';
-        const uid = `${dateKey(date)}-${teacher.replace(/[^a-z0-9]/gi, '')}@relief-society-calendar`;
-        lines.push('BEGIN:VEVENT');
-        lines.push(`UID:${uid}`);
-        if (settings.time) {
-          const startMinutes = Number(settings.time.slice(0, 2)) * 60 + Number(settings.time.slice(3, 5));
-          const endMinutes = startMinutes + Number(settings.duration || 60);
-          const end = `${String(Math.floor(endMinutes / 60) % 24).padStart(2, '0')}:${String(endMinutes % 60).padStart(2, '0')}`;
-          lines.push(`DTSTART:${googleDateTime(date, settings.time)}`);
-          lines.push(`DTEND:${googleDateTime(date, end)}`);
-        } else {
-          lines.push(`DTSTART;VALUE=DATE:${googleDate(date)}`);
-          lines.push(`DTEND;VALUE=DATE:${googleDate(addDays(date, 1))}`);
-        }
-        lines.push(`SUMMARY:${escapeICS(`${settings.title} - ${teacher}`)}`);
-        lines.push(`DESCRIPTION:${escapeICS(`Teacher: ${teacher}\\nLesson topic: ${topic}`)}`);
-        lines.push('END:VEVENT');
+      const monthList = visibleMonths(); const first = new Date(monthList[0].year, monthList[0].month, 1); const last = new Date(monthList[2].year, monthList[2].month + 1, 0); const lines = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Relief Society Teaching Calendar//EN', 'CALSCALE:GREGORIAN'];
+      for (let date = first; date <= last; date = addDays(date, 1)) { const teacher = teacherFor(date); const detail = getDetails(date); if (!teacher || !isTeachingSunday(date) || isInactive(date)) continue; const topic = savedTopics[dateKey(date)] || 'Lesson topic TBD'; const uid = `${dateKey(date)}-${teacher.replace(/[^a-z0-9]/gi, '')}@relief-society-calendar`; lines.push('BEGIN:VEVENT', `UID:${uid}`);
+        if (settings.time) { const startMinutes = Number(settings.time.slice(0, 2)) * 60 + Number(settings.time.slice(3, 5)); const endMinutes = startMinutes + Number(settings.duration || 60); const end = `${String(Math.floor(endMinutes / 60) % 24).padStart(2, '0')}:${String(endMinutes % 60).padStart(2, '0')}`; lines.push(`DTSTART:${googleDateTime(date, settings.time)}`, `DTEND:${googleDateTime(date, end)}`); } else lines.push(`DTSTART;VALUE=DATE:${googleDate(date)}`, `DTEND;VALUE=DATE:${googleDate(addDays(date, 1))}`);
+        const description = [`Teacher: ${teacher}`, `Status: ${statusLabel(detail.status)}`, `Lesson topic: ${topic}`, detail.notes ? `Preparation notes: ${detail.notes}` : '', detail.resource ? `Resource: ${detail.resource}` : ''].filter(Boolean).join('\n'); lines.push(`SUMMARY:${escapeICS(`${settings.title} - ${teacher}`)}`, `DESCRIPTION:${escapeICS(description)}`); if (settings.location) lines.push(`LOCATION:${escapeICS(settings.location)}`); if (Number(settings.reminderDays) > 0) lines.push('BEGIN:VALARM', `TRIGGER:-P${Number(settings.reminderDays)}D`, 'ACTION:DISPLAY', `DESCRIPTION:${escapeICS(`${settings.title} reminder`)}`, 'END:VALARM'); lines.push('END:VEVENT');
       }
-      lines.push('END:VCALENDAR');
-      const blob = new Blob([lines.join('\\r\\n')], { type: 'text/calendar;charset=utf-8' });
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = 'relief-society-teaching-calendar.ics';
-      link.click();
-      URL.revokeObjectURL(url);
+      lines.push('END:VCALENDAR'); const blob = new Blob([lines.join('\r\n')], { type: 'text/calendar;charset=utf-8' }); const url = URL.createObjectURL(blob); const link = document.createElement('a'); link.href = url; link.download = 'relief-society-teaching-calendar.ics'; link.click(); URL.revokeObjectURL(url);
     }
+    function snapshotForSharing() { return { version: 1, settings, savedTopics, savedOverrides, eventDetails, syncEndpoint: sync.endpoint || '' }; }
+    function encodeShare(value) { const bytes = new TextEncoder().encode(JSON.stringify(value)); let binary = ''; bytes.forEach(byte => binary += String.fromCharCode(byte)); return btoa(binary).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, ''); }
+    function decodeShare(value) { try { const binary = atob(value.replace(/-/g, '+').replace(/_/g, '/') + '==='.slice((value.length + 3) % 4)); const bytes = Uint8Array.from(binary, char => char.charCodeAt(0)); return JSON.parse(new TextDecoder().decode(bytes)); } catch (error) { return null; } }
+    function shareUrl() { return `${location.href.split('#')[0]}#schedule=${encodeShare(snapshotForSharing())}`; }
+    async function copyText(value) { if (navigator.clipboard?.writeText) return navigator.clipboard.writeText(value); const input = document.createElement('textarea'); input.value = value; document.body.appendChild(input); input.select(); document.execCommand('copy'); input.remove(); }
+    async function copyShareLink() { try { await copyText(shareUrl()); alert('A snapshot link was copied. It includes the current schedule and preparation details.'); } catch (error) { alert('Unable to copy the link on this device.'); } }
+    async function shareCalendar() { const url = shareUrl(); if (navigator.share) { try { await navigator.share({ title: settings.title, text: 'Relief Society teaching calendar', url }); } catch (error) {} } else await copyShareLink(); }
+    function readShareLink() { const match = location.hash.match(/^#schedule=(.+)$/); const snapshot = match ? decodeShare(match[1]) : null; if (snapshot) { applySnapshot(snapshot); if (snapshot.syncEndpoint) sync.endpoint = snapshot.syncEndpoint; persist(); } }
 
-    function fillSettingsForm() {
-      document.getElementById('startDateInput').value = settings.startDate;
-      document.getElementById('titleInput').value = settings.title;
-      document.getElementById('timeInput').value = settings.time;
-      document.getElementById('durationInput').value = settings.duration;
-      document.getElementById('rotationInput').value = settings.rotation.join('\\n');
-    }
+    function sharedPayload() { return { type: 'relief-society-calendar-update', updatedAt: new Date().toISOString(), notificationEmail: sync.email || '', state: snapshotForSharing(), history: history.slice(0, 20) }; }
+    async function syncState() { if (!sync.endpoint) return; updateSyncNotice('Saving shared changes…'); try { await fetch(sync.endpoint, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(sharedPayload()) }); updateSyncNotice('Shared sync enabled'); } catch (error) { updateSyncNotice('Shared sync needs attention'); } }
+    async function loadShared() { if (!sync.endpoint) { alert('Add a shared sync URL in Settings first.'); return; } updateSyncNotice('Loading shared calendar…'); try { const response = await fetch(sync.endpoint, { cache: 'no-store' }); const payload = await response.json(); if (payload.state) { applySnapshot(payload.state); history = Array.isArray(payload.history) ? payload.history : history; persist(); render(); } updateSyncNotice('Shared sync enabled'); document.getElementById('settingsStatus').textContent = 'Shared calendar loaded.'; } catch (error) { updateSyncNotice('Shared sync needs attention'); alert('The shared calendar could not be loaded. Check the URL and endpoint permissions.'); } }
+    function fillSettingsForm() { document.getElementById('startDateInput').value = settings.startDate; document.getElementById('titleInput').value = settings.title; document.getElementById('timeInput').value = settings.time; document.getElementById('durationInput').value = settings.duration; document.getElementById('locationInput').value = settings.location || ''; document.getElementById('reminderDaysInput').value = settings.reminderDays || 0; document.getElementById('rotationInput').value = settings.rotation.join('\n'); document.getElementById('endpointInput').value = sync.endpoint || ''; document.getElementById('emailInput').value = sync.email || ''; }
 
-    document.getElementById('settingsButton').addEventListener('click', () => {
-      const panel = document.getElementById('settingsPanel');
-      panel.hidden = !panel.hidden;
-      if (!panel.hidden) fillSettingsForm();
-    });
+    document.getElementById('settingsButton').addEventListener('click', () => { const panel = document.getElementById('settingsPanel'); panel.hidden = !panel.hidden; if (!panel.hidden) fillSettingsForm(); });
+    document.getElementById('historyButton').addEventListener('click', () => { const panel = document.getElementById('historyPanel'); panel.hidden = !panel.hidden; if (!panel.hidden) renderHistory(); });
     document.getElementById('saveSettingsButton').addEventListener('click', () => {
-      const startDate = document.getElementById('startDateInput').value;
-      const rotation = document.getElementById('rotationInput').value.split('\\n').map(value => value.trim()).filter(Boolean);
-      if (!startDate || parseDate(startDate).getDay() !== 0) {
-        alert('Please choose a Sunday as the starting date.');
-        return;
-      }
-      if (!rotation.length) {
-        alert('Please add at least one person or group to the rotation.');
-        return;
-      }
-      settings = {
-        startDate,
-        title: document.getElementById('titleInput').value.trim() || defaults.title,
-        time: document.getElementById('timeInput').value,
-        duration: Math.max(15, Number(document.getElementById('durationInput').value) || 60),
-        rotation
-      };
-      localStorage.setItem(settingsKey, JSON.stringify(settings));
-      render();
-      document.getElementById('settingsStatus').textContent = 'Saved.';
+      const startDate = document.getElementById('startDateInput').value; const rotation = document.getElementById('rotationInput').value.split('\n').map(value => value.trim()).filter(Boolean); if (!startDate || parseDate(startDate).getDay() !== 0) { alert('Please choose a Sunday as the starting date.'); return; } if (!rotation.length) { alert('Please add at least one person or group to the rotation.'); return; }
+      const previous = captureSnapshot(); settings = { startDate, title: document.getElementById('titleInput').value.trim() || defaults.title, time: document.getElementById('timeInput').value, duration: Math.max(15, Number(document.getElementById('durationInput').value) || 60), location: document.getElementById('locationInput').value.trim(), reminderDays: Math.max(0, Math.min(30, Number(document.getElementById('reminderDaysInput').value) || 0)), rotation }; sync = { endpoint: document.getElementById('endpointInput').value.trim(), email: document.getElementById('emailInput').value.trim() }; persist(); render(); recordChange('Calendar settings updated', previous); document.getElementById('settingsStatus').textContent = 'Saved.';
     });
-    document.getElementById('printButton').addEventListener('click', () => window.print());
-    document.getElementById('exportButton').addEventListener('click', downloadICS);
-    document.getElementById('clearButton').addEventListener('click', () => {
-      if (!confirm('Clear all saved lesson topics?')) return;
-      savedTopics = {};
-      localStorage.removeItem(topicsKey);
-      render();
-    });
+    document.getElementById('loadSharedButton').addEventListener('click', loadShared); document.getElementById('syncButton').addEventListener('click', loadShared); document.getElementById('printButton').addEventListener('click', () => window.print()); document.getElementById('copyLinkButton').addEventListener('click', copyShareLink); document.getElementById('shareButton').addEventListener('click', shareCalendar); document.getElementById('exportButton').addEventListener('click', downloadICS);
+    document.getElementById('undoButton').addEventListener('click', () => { if (!history.length) return; const latest = history.shift(); applySnapshot(latest.previous); persist(); render(); void syncState(); });
+    document.getElementById('clearHistoryButton').addEventListener('click', () => { if (!confirm('Clear the change history?')) return; history = []; persist(); renderHistory(); });
+    document.getElementById('clearButton').addEventListener('click', () => { if (!confirm('Reset all lesson topics, notes, links, statuses, and custom teacher changes?')) return; const previous = captureSnapshot(); savedTopics = {}; savedOverrides = {}; eventDetails = {}; persist(); render(); recordChange('All lesson details reset', previous); });
 
-    fillSettingsForm();
-    render();
+    readShareLink(); fillSettingsForm(); render();
   </script>
 </body>
 </html>
